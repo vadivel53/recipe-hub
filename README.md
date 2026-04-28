@@ -135,6 +135,8 @@ Frontend runs on: **http://localhost:5173**
 Submission artifacts are organized in `docs/`:
 
 - `docs/CONSOLIDATED_SUBMISSION.md` (Points 1, 2, 4)
+- `docs/SUBMISSION_READY_DOCUMENT.md` (rubric/marks + LMS-ready checklist)
+- `docs/API_DOCUMENTATION.md` (Markdown API reference)
 - `docs/DELIVERABLES.md`
 - `docs/ARCHITECTURE.md`
 - `docs/DB_SCHEMA.md`

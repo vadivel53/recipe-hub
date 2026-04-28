@@ -6,6 +6,7 @@ This folder tracks all submission artifacts requested in `FSAD_Assignment _2026.
 
 - Source code (full-stack): `backend/`, `frontend/`
 - API documentation:
+  - Markdown API reference: `docs/API_DOCUMENTATION.md`
   - Swagger annotations in route files under `backend/src/routes/`
   - Live Swagger UI at `http://localhost:5000/api/docs`
   - API overview in root `README.md`

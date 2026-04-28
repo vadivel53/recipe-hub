@@ -25,8 +25,30 @@ app.use('/api/recipes', require('./routes/recipe.routes'));
 app.use('/api/planner', require('./routes/planner.routes'));
 app.use('/api/users', require('./routes/user.routes'));
 
-// Health check
-app.get('/', (req, res) => res.json({ message: 'Recipe Hub API is running 🍴' }));
+// Health check / landing page for browser users
+app.get('/', (req, res) => {
+  res.type('html').send(`
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Recipe Hub API</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.5; }
+          code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
+        </style>
+      </head>
+      <body>
+        <h1>Recipe Hub API is running</h1>
+        <p>Backend server is healthy.</p>
+        <p>Swagger docs: <a href="/api/docs">/api/docs</a></p>
+        <p>Frontend (if running): <a href="http://localhost:5173">http://localhost:5173</a></p>
+        <p>API base: <code>/api</code></p>
+      </body>
+    </html>
+  `);
+});
 
 // Error handler
 app.use((err, req, res, next) => {

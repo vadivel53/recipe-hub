@@ -40,3 +40,17 @@ AI accelerated routine tasks (documentation scaffolding, consistency checks, and
 The main limitation was that AI can infer missing context incorrectly if project constraints are not stated clearly. Manual validation was required after every generated change, especially for runtime scripts, environment assumptions, and assignment compliance.
 
 Debugging AI-generated output improved understanding of project wiring (routing, middleware flow, and frontend-backend integration). Overall, AI helped productivity and quality when combined with deliberate human review and testing.
+
+## Issues encountered integrating AI output
+
+- Runtime/library mismatch issue:
+  - A generated async Mongoose pre-save hook used `next()` style that caused a runtime error (`next is not a function`) with the current setup.
+  - Resolution: updated hook implementation to async-return style and revalidated seed flow.
+- Incomplete assumptions in generated code:
+  - Generated average rating logic assumed `ratings` was always present, causing planner-related API failures when partial documents were populated.
+  - Resolution: added null-safe handling for `ratings` and retested planner add workflow.
+- Environment/config alignment gaps:
+  - Setup instructions and package scripts were initially inconsistent (`start`/`dev` missing in backend scripts while README referenced them).
+  - Resolution: aligned `package.json` scripts with documentation and validated end-to-end startup.
+
+These issues were resolved through iterative testing, log inspection, and manual correction of AI-generated output.
