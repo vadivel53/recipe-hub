@@ -48,10 +48,50 @@ recipe-hub/
 
 - Node.js v18+
 - MongoDB (local) or MongoDB Atlas URI
+- Docker Desktop (optional, recommended for quick local MongoDB)
+
+---
+
+## 🐳 Quick MongoDB Setup (Docker)
+
+If you do not have MongoDB installed locally:
+
+```bash
+docker compose up -d mongo
+```
+
+This starts MongoDB on `127.0.0.1:27017` with database name `recipe_hub`.
 
 ---
 
 ## 🚀 Setup & Running
+
+## ⚡ Quick Start (Local)
+
+```bash
+# from project root
+docker compose up -d mongo
+
+# backend (terminal 1)
+cd backend
+cp .env.example .env
+npm install
+npm run seed
+npm run dev
+
+# frontend (terminal 2)
+cd frontend
+cp .env.example .env
+npm install
+npm run dev
+```
+
+Open:
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
+- Swagger: `http://localhost:5000/api/docs`
+
+---
 
 ### 1. Backend
 
@@ -59,8 +99,10 @@ recipe-hub/
 cd backend
 npm install
 
-# Configure environment (edit .env if needed)
-# Default: MongoDB at localhost:27017/recipe_hub
+# Configure environment
+cp .env.example .env
+# Edit .env if needed
+# Default MongoDB: mongodb://127.0.0.1:27017/recipe_hub
 
 # Seed the database with sample data
 npm run seed
@@ -79,10 +121,81 @@ API Docs (Swagger): **http://localhost:5000/api/docs**
 ```bash
 cd frontend
 npm install
+# Optional API override
+cp .env.example .env
 npm run dev
 ```
 
 Frontend runs on: **http://localhost:5173**
+
+---
+
+## 📚 Assignment Deliverables Pack
+
+Submission artifacts are organized in `docs/`:
+
+- `docs/CONSOLIDATED_SUBMISSION.md` (Points 1, 2, 4)
+- `docs/DELIVERABLES.md`
+- `docs/ARCHITECTURE.md`
+- `docs/DB_SCHEMA.md`
+- `docs/COMPONENT_HIERARCHY.md`
+- `docs/ASSUMPTIONS.md`
+- `docs/AI_USAGE_LOG_AND_REFLECTION.md`
+- `docs/DEMO_VIDEO_CHECKLIST.md`
+
+---
+
+## 🚢 Deployment Procedure
+
+### Option A: Local Deployment (Recommended for evaluation)
+
+1. Start MongoDB:
+   - Local MongoDB service, or
+   - `docker compose up -d mongo`
+2. Deploy backend locally:
+   - `cd backend`
+   - `cp .env.example .env`
+   - Update `MONGO_URI` and `JWT_SECRET`
+   - `npm install`
+   - `npm run seed` (first time)
+   - `npm start`
+3. Deploy frontend locally:
+   - `cd frontend`
+   - `cp .env.example .env`
+   - Set `VITE_API_URL=http://localhost:5000/api`
+   - `npm install`
+   - `npm run build` (production check)
+   - `npm run dev` (or serve static build with preferred hosting)
+
+### Option B: Cloud Deployment (Frontend + Backend split)
+
+#### 1) Backend deployment (Render/Railway/any Node host)
+
+- Create a backend service from `backend/`
+- Build command: `npm install`
+- Start command: `npm start`
+- Add environment variables:
+  - `PORT=5000` (or provider default)
+  - `MONGO_URI=<your_mongodb_atlas_uri>`
+  - `JWT_SECRET=<secure_secret>`
+- Confirm Swagger is reachable at `<backend-url>/api/docs`
+
+#### 2) Frontend deployment (Vercel/Netlify/any static host)
+
+- Deploy from `frontend/`
+- Build command: `npm run build`
+- Output directory: `dist`
+- Environment variable:
+  - `VITE_API_URL=<backend-url>/api`
+- Redeploy and validate login + planner + admin flows
+
+### Post-deployment smoke test checklist
+
+- Open frontend URL and load home page
+- Register/login works
+- Create recipe works
+- Add to meal planner works
+- Swagger API docs open successfully
 
 ---
 
